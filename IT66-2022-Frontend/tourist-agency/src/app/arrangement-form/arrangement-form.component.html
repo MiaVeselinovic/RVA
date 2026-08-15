@@ -1,0 +1,63 @@
+<div class="container">
+  <h3 mat-dialog-title *ngIf="flag == 1">Add arrangement</h3>
+  <h3 mat-dialog-title *ngIf="flag == 2">Update arrangement: #{{ data.id }}</h3>
+  <h3 mat-dialog-title *ngIf="flag == 3">Delete arrangement: #{{ data.id }}</h3>
+
+  <form class="mat-dialog-content" #formControl="ngForm">
+    <div class="form">
+      <mat-form-field>
+        <input
+          matInput
+          type="number"
+          min="0"
+          placeholder="Total cost"
+          name="total_cost"
+          [disabled]="flag == 3"
+          [(ngModel)]="data.total_cost"
+          required
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <mat-select placeholder="Payed" name="payed" [disabled]="flag == 3" [(ngModel)]="data.payed" required>
+          <mat-option [value]="true">Yes</mat-option>
+          <mat-option [value]="false">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input matInput [matDatepicker]="creationDate" placeholder="Date" name="realization_date" [disabled]="flag == 3" [(ngModel)]="data.realization_date" required />
+        <mat-datepicker-toggle matSuffix [for]="creationDate"></mat-datepicker-toggle>
+        <mat-datepicker #creationDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <mat-select [compareWith]="compareHotel" placeholder="Hotel" name="hotel" [disabled]="flag == 3" [(ngModel)]="data.hotel" required
+          [compareWith]="compareHotel"
+          placeholder="Hotel"
+          name="hotel"
+          [disabled]="flag == 3"
+          [(ngModel)]="data.hotel"
+          required
+        >
+          <mat-option *ngFor="let h of hotels" [value]="h">
+            {{ h.naziv }}<ng-container *ngIf="h.destination"> ({{ h.destination?.place }})</ng-container>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div class="mat-dialog-actions">
+    <button matButton *ngIf="flag == 1" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="add()">Save</button>
+    <button matButton *ngIf="flag == 2" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="update()">Change</button>
+    <button matButton *ngIf="flag == 3" mat-dialog-close="1" (click)="delete()">Delete/button>
+    <button matButton (click)="cancel()">Cancel</button>
+  </div>
+</div>

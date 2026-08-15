@@ -28,6 +28,12 @@ public class ArrangementController {
     @Autowired
     private AgencyService agencyService;
 
+    @GetMapping("/arrangement")
+    public ResponseEntity<?> getAllArrangements() {
+        return ResponseEntity.ok(arrangementService.getAll());
+    }
+
+
     @GetMapping("/arrangement/id/{id}")
     public ResponseEntity<?> getArrangementById(@PathVariable int id) {
         Optional<Arrangement> arrangement = arrangementService.findById(id);
