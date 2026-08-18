@@ -35,7 +35,7 @@ export class HotelFormComponent {
     this.hotelService.createHotel(this.data).subscribe({
       next: (created) => {
         this.dialogRef.close(1);
-        this.snackBar.open(`Hotel "${created.naziv}" succesfull created!`, 'OK', { duration: 2500 });
+        this.snackBar.open(`Hotel "${created.name}" succesfull created!`, 'OK', { duration: 2500 });
       },
       error: (error) => {
         this.snackBar.open('Error during hotel creation', 'OK', { duration: 2500 });
@@ -48,7 +48,7 @@ export class HotelFormComponent {
     this.hotelService.updateHotel(this.data).subscribe({
       next: (updated) => {
         this.dialogRef.close(1);
-        this.snackBar.open(`Hotel "${updated.naziv}" successfull updated`, 'OK', { duration: 2500 });
+        this.snackBar.open(`Hotel "${updated.name}" successfull updated`, 'OK', { duration: 2500 });
       },
       error: (error) => {
         this.snackBar.open('Error during hotel update', 'OK', { duration: 2500 });

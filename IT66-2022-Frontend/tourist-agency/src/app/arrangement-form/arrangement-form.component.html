@@ -71,11 +71,11 @@
       >
 
         <mat-option [value]="true">
-          Plaćeno
+          Online
         </mat-option>
 
         <mat-option [value]="false">
-          Nije plaćeno
+          Po dolasku
         </mat-option>
 
       </mat-select>
@@ -92,7 +92,7 @@
 
       <input
         matInput
-        [matDatepicker]="realizationDate"
+        [matDatepicker]="realization_date"
         name="realization_date"
         [disabled]="flag == 3"
         [(ngModel)]="data.realization_date"
@@ -101,11 +101,11 @@
 
       <mat-datepicker-toggle
         matSuffix
-        [for]="realizationDate"
+        [for]="realization_date"
       >
       </mat-datepicker-toggle>
 
-      <mat-datepicker #realizationDate></mat-datepicker>
+      <mat-datepicker #realization_date></mat-datepicker>
 
     </mat-form-field>
 

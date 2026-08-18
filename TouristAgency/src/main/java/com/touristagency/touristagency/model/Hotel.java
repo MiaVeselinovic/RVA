@@ -17,7 +17,7 @@ public class Hotel implements Serializable {
 
     private int id;
     private String name;
-    private int number_of_stars;
+    private int numberOfStars;
     private String description;
 
     @OneToMany(mappedBy = "hotel")
@@ -32,11 +32,11 @@ public class Hotel implements Serializable {
         super();
     }
 
-    public Hotel(int id, String name, int number_of_stars, String description, List<Arrangement> arrangements, Destination destination) {
+    public Hotel(int id, String name, int numberOfStars, String description, List<Arrangement> arrangements, Destination destination) {
         super();
         this.id = id;
         this.name = name;
-        this.number_of_stars = number_of_stars;
+        this.numberOfStars = numberOfStars;
         this.description = description;
         this.arrangements = arrangements;
         this.destination = destination;
@@ -58,12 +58,12 @@ public class Hotel implements Serializable {
         this.name = name;
     }
 
-    public int getNumber_of_stars() {
-        return number_of_stars;
+    public int getNumberOfStars() {
+        return numberOfStars;
     }
 
-    public void setNumber_of_stars(int number_of_stars) {
-        this.number_of_stars = number_of_stars;
+    public void setNumberOfStars(int number_of_stars) {
+        this.numberOfStars = number_of_stars;
     }
 
     public String getDescription() {

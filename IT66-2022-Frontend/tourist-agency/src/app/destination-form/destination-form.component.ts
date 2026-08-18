@@ -31,7 +31,7 @@ export class DestinationFormComponent {
       {
         next: (data)=> {
           this.dialogRef.close(1);
-          this.snackBar.open(`Destination for places: ${data.mesto} succesfull created!`, 'Ok', {duration:2500});
+          this.snackBar.open(`Destination for places: ${data.place} succesfull created!`, 'Ok', {duration:2500});
         },
         error:error => {
           this.snackBar.open('Error during destination create', 'Ok', {duration:2500});

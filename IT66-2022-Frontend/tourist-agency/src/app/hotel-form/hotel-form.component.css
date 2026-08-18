@@ -1,49 +1,183 @@
+.dialog-container {
+  width: 100%;
+  min-width: 520px;
+  max-width: 520px;
 
-.container{
+  padding: 30px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.dialog-header {
   display: flex;
-  flex-direction: column;
-  max-width: 350px;
-  margin: 0 auto;
   align-items: center;
-  padding: 32px 16px 32px 16px;
   gap: 16px;
+
+  margin-bottom: 28px;
 }
 
-form{
+.dialog-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 54px;
+  height: 54px;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  background: #edf8f7;
+  color: #1c9895;
+}
+
+.hotel-icon {
+  background: #fdf7ea;
+  color: #c9963f;
+}
+
+.dialog-icon mat-icon {
+  font-size: 27px;
+  width: 27px;
+  height: 27px;
+}
+
+.dialog-label {
+  color: #1c9895;
+
+  font-size: 0.68rem;
+  letter-spacing: 1.6px;
+  font-weight: 700;
+}
+
+.dialog-header h2 {
+  margin: 4px 0 2px;
+
+  color: #163e5a;
+
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.dialog-header p {
+  margin: 0;
+
+  color: #80909d;
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.dialog-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 17px;
 }
 
-h3{
-  text-align: center;
-  text-wrap: pretty;
+.dialog-form mat-form-field {
+  width: 100%;
 }
 
-.mat-form-field{
-  font-size: 16px;
-  flex-grow: 1;
+.dialog-form mat-icon {
+  color: #1c9895;
+  margin-right: 7px;
 }
 
-.mat-dialog-actions{
+
+/* =========================
+   DESTINATION OPTIONS
+========================= */
+
+.destination-option {
   display: flex;
-  width: 90%;
-  justify-content: center;
-  gap: 12px;
+  align-items: center;
+  gap: 8px;
 }
 
-.mat-dialog-actions button{
-  padding: 12px;
-  font-size: 16px;
-  color: #fff;
-  border: none;
+.destination-option strong {
+  color: #244760;
+}
+
+.destination-option span {
+  color: #86939f;
+  font-size: 0.8rem;
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 25px;
+  padding-top: 20px;
+
+  border-top: 1px solid #edf1f4;
+}
+
+.cancel-button {
+  color: #667988;
+}
+
+.save-button {
+  min-width: 125px;
+
+  background: #123f5d;
+  color: white;
+
   border-radius: 6px;
 }
 
-.mat-dialog-actions button:first-child{
-  background-color: rgb(118, 75, 162);
+.save-button mat-icon {
+  margin-right: 6px;
 }
 
-.mat-dialog-actions button:last-child{
-  background-color: rgb(245, 87, 108);
+.delete-confirm-button {
+  min-width: 110px;
+
+  background: #c45c57;
+  color: white;
+
+  border-radius: 6px;
+}
+
+.delete-confirm-button mat-icon {
+  margin-right: 6px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 500px) {
+
+  .dialog-container {
+    min-width: auto;
+    padding: 24px;
+  }
+
+  .dialog-actions {
+    flex-wrap: wrap;
+  }
+
+  .save-button,
+  .delete-confirm-button {
+    flex: 1;
+  }
+
 }

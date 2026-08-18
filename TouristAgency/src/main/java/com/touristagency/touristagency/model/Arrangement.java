@@ -17,7 +17,7 @@ public class Arrangement implements Serializable {
     private int id;
     private double total_cost;
     private boolean payed;
-    private Date date_realization;
+    private Date realization_date;
 
     @ManyToOne
     @JoinColumn(name = "hotel")
@@ -31,13 +31,13 @@ public class Arrangement implements Serializable {
         super();
     }
 
-    public Arrangement(int id, double total_cost, boolean payed, Date date_realization, Hotel hotel,
+    public Arrangement(int id, double total_cost, boolean payed, Date realization_date, Hotel hotel,
                     Agency agency) {
         super();
         this.id = id;
         this.total_cost = total_cost;
         this.payed = payed;
-        this.date_realization = date_realization;
+        this.realization_date= realization_date;
         this.hotel = hotel;
         this.agency = agency;
     }
@@ -66,12 +66,12 @@ public class Arrangement implements Serializable {
         this.payed = payed;
     }
 
-    public Date getDate_realization() {
-        return date_realization;
+    public Date getRealization_date() {
+        return realization_date;
     }
 
-    public void setDate_realization(Date date_realization) {
-        this.date_realization = date_realization;
+    public void setRealization_date(Date realization_date) {
+        this.realization_date = realization_date;
     }
 
     public Hotel getHotel() {
