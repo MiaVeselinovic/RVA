@@ -11,7 +11,6 @@ import { DestinationService } from '../services/destination-service';
 
 @Component({
   selector: 'app-destination-form',
-  imports: [MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule,FormsModule, CommonModule],
   templateUrl: './destination-form.component.html',
   styleUrls: ['./destination-form.component.css']
 })

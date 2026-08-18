@@ -1,63 +1,200 @@
-<div class="container">
-  <h3 mat-dialog-title *ngIf="flag == 1">Add arrangement</h3>
-  <h3 mat-dialog-title *ngIf="flag == 2">Update arrangement: #{{ data.id }}</h3>
-  <h3 mat-dialog-title *ngIf="flag == 3">Delete arrangement: #{{ data.id }}</h3>
+<div class="dialog-container">
 
-  <form class="mat-dialog-content" #formControl="ngForm">
-    <div class="form">
-      <mat-form-field>
-        <input
-          matInput
-          type="number"
-          min="0"
-          placeholder="Total cost"
-          name="total_cost"
-          [disabled]="flag == 3"
-          [(ngModel)]="data.total_cost"
-          required
-        />
-      </mat-form-field>
+  <div class="dialog-header">
+
+    <div class="dialog-icon">
+      <mat-icon>
+        {{ flag == 3 ? 'delete_outline' : 'luggage' }}
+      </mat-icon>
     </div>
 
-    <div class="form">
-      <mat-form-field>
-        <mat-select placeholder="Payed" name="payed" [disabled]="flag == 3" [(ngModel)]="data.payed" required>
-          <mat-option [value]="true">Yes</mat-option>
-          <mat-option [value]="false">No</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div>
+
+      <span class="dialog-label">
+        ART OF TRAVEL
+      </span>
+
+      <h2>
+        <span *ngIf="flag == 1">Novi aranžman</span>
+        <span *ngIf="flag == 2">Izmena aranžmana #{{ data.id }}</span>
+        <span *ngIf="flag == 3">Brisanje aranžmana #{{ data.id }}</span>
+      </h2>
+
+      <p *ngIf="flag == 3">
+        Da li ste sigurni da želite da obrišete ovaj aranžman?
+      </p>
+
     </div>
 
-    <div class="form">
-      <mat-form-field>
-        <input matInput [matDatepicker]="creationDate" placeholder="Date" name="realization_date" [disabled]="flag == 3" [(ngModel)]="data.realization_date" required />
-        <mat-datepicker-toggle matSuffix [for]="creationDate"></mat-datepicker-toggle>
-        <mat-datepicker #creationDate></mat-datepicker>
-      </mat-form-field>
-    </div>
+  </div>
 
-    <div class="form">
-      <mat-form-field>
-        <mat-select [compareWith]="compareHotel" placeholder="Hotel" name="hotel" [disabled]="flag == 3" [(ngModel)]="data.hotel" required
-          [compareWith]="compareHotel"
-          placeholder="Hotel"
-          name="hotel"
-          [disabled]="flag == 3"
-          [(ngModel)]="data.hotel"
-          required
+
+  <form
+    class="dialog-form"
+    #formControl="ngForm"
+  >
+
+    <!-- PRICE -->
+    <mat-form-field appearance="outline">
+
+      <mat-label>Ukupna cena</mat-label>
+
+      <mat-icon matPrefix>payments</mat-icon>
+
+      <input
+        matInput
+        type="number"
+        min="0"
+        name="total_cost"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.total_cost"
+        required
+      />
+
+      <span matSuffix>€</span>
+
+    </mat-form-field>
+
+
+    <!-- PAYMENT -->
+    <mat-form-field appearance="outline">
+
+      <mat-label>Status plaćanja</mat-label>
+
+      <mat-icon matPrefix>credit_card</mat-icon>
+
+      <mat-select
+        name="payed"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.payed"
+        required
+      >
+
+        <mat-option [value]="true">
+          Plaćeno
+        </mat-option>
+
+        <mat-option [value]="false">
+          Nije plaćeno
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+
+    <!-- DATE -->
+    <mat-form-field appearance="outline">
+
+      <mat-label>Datum realizacije</mat-label>
+
+      <mat-icon matPrefix>event</mat-icon>
+
+      <input
+        matInput
+        [matDatepicker]="realizationDate"
+        name="realization_date"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.realization_date"
+        required
+      />
+
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="realizationDate"
+      >
+      </mat-datepicker-toggle>
+
+      <mat-datepicker #realizationDate></mat-datepicker>
+
+    </mat-form-field>
+
+
+    <!-- HOTEL -->
+    <mat-form-field appearance="outline">
+
+      <mat-label>Hotel</mat-label>
+
+      <mat-icon matPrefix>hotel</mat-icon>
+
+      <mat-select
+        name="hotel"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.hotel"
+        [compareWith]="compareHotel"
+        required
+      >
+
+        <mat-option
+          *ngFor="let h of hotels"
+          [value]="h"
         >
-          <mat-option *ngFor="let h of hotels" [value]="h">
-            {{ h.naziv }}<ng-container *ngIf="h.destination"> ({{ h.destination?.place }})</ng-container>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+
+          {{ h.name }}
+
+          <span *ngIf="h.destination">
+            — {{ h.destination.place }}
+          </span>
+
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
   </form>
 
-  <div class="mat-dialog-actions">
-    <button matButton *ngIf="flag == 1" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="add()">Save</button>
-    <button matButton *ngIf="flag == 2" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="update()">Change</button>
-    <button matButton *ngIf="flag == 3" mat-dialog-close="1" (click)="delete()">Delete/button>
-    <button matButton (click)="cancel()">Cancel</button>
+
+  <div class="dialog-actions">
+
+    <button
+      mat-button
+      class="cancel-button"
+      (click)="cancel()"
+    >
+      Otkaži
+    </button>
+
+
+    <button
+      mat-raised-button
+      class="save-button"
+      *ngIf="flag == 1"
+      type="submit"
+      mat-dialog-close="1"
+      [disabled]="!formControl.valid"
+      (click)="add()"
+    >
+      <mat-icon>save</mat-icon>
+      Sačuvaj
+    </button>
+
+
+    <button
+      mat-raised-button
+      class="save-button"
+      *ngIf="flag == 2"
+      type="submit"
+      mat-dialog-close="1"
+      [disabled]="!formControl.valid"
+      (click)="update()"
+    >
+      <mat-icon>check</mat-icon>
+      Sačuvaj izmene
+    </button>
+
+
+    <button
+      mat-raised-button
+      class="delete-confirm-button"
+      *ngIf="flag == 3"
+      mat-dialog-close="1"
+      (click)="delete()"
+    >
+      <mat-icon>delete_outline</mat-icon>
+      Obrisi
+    </button>
+
   </div>
+
 </div>

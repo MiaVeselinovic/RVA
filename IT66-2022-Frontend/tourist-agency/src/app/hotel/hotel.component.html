@@ -1,65 +1,223 @@
-<mat-toolbar color="primary">
-  <span class="title-center">Hotels</span>
-</mat-toolbar>
+<div class="hotel-page">
 
-<div class="container mat-elavation-z8">
-  <table mat-table matSort [dataSource]="dataSource" class="mat-cell">
-    <!-- ID -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-    </ng-container>
+  <!-- HEADER -->
+  <section class="page-header">
 
-    <!-- Naziv -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let row">{{ row.naziv }}</td>
-    </ng-container>
+    <div class="header-content">
 
-    <!-- Broj zvezdica -->
-    <ng-container matColumnDef="numberOfStars">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Number of stars</th>
-      <td mat-cell *matCellDef="let row">{{ row.numberOfStars }}</td>
-    </ng-container>
+      <div>
+        <span class="section-label">ART OF TRAVEL</span>
 
-    <!-- Opis -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Description</th>
-      <td mat-cell *matCellDef="let row">{{ row.description }}</td>
-    </ng-container>
+        <h1>Hoteli</h1>
 
-    <!-- Destinacija -->
-    <ng-container matColumnDef="destination">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Destination</th>
-      <td mat-cell *matCellDef="let row">{{ row.destination?.place }}</td>
-    </ng-container>
+        <p>
+          Pregledajte hotele, njihove kategorije, opise
+          i destinacije na kojima se nalaze.
+        </p>
+      </div>
 
-    <!-- Action Buttons -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button (click)="openDialog(1)">
-          <mat-icon color="accent">add</mat-icon>
-        </button>
-      </th>
-      <td mat-cell *matCellDef="let row; let i = index">
-        <button
-          mat-icon-button
-          (click)="openDialog(2, row.id, row.name, row.numberOfStars, row.description, row.destination)"
-        >
-          <mat-icon color="primary" aria-label="Edit">edit</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          (click)="openDialog(3, row.id, row.name, row.numberOfStars, row.description, row.destinations)"
-        >
-          <mat-icon color="warn" aria-label="Delete">delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <button
+        mat-raised-button
+        class="add-button"
+        (click)="openDialog(1)"
+      >
+        <mat-icon>add</mat-icon>
+        Dodaj hotel
+      </button>
 
-    <!-- Rows -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page"></mat-paginator>
+    </div>
+
+  </section>
+
+
+  <!-- HOTEL LIST -->
+  <section class="hotel-section">
+
+    <div class="section-top">
+
+      <div>
+        <span class="list-label">SMEŠTAJ</span>
+        <h2>Naši hoteli</h2>
+      </div>
+
+      <div class="hotel-count" *ngIf="dataSource">
+
+        <mat-icon>hotel</mat-icon>
+
+        <span>
+          {{ dataSource.data.length }} hotela
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- GRID -->
+    <div
+      class="hotel-grid"
+      *ngIf="dataSource"
+    >
+
+      <mat-card
+        class="hotel-card"
+        *ngFor="let hotel of dataSource.data"
+      >
+
+        <!-- HOTEL TOP -->
+        <div class="hotel-top">
+
+          <div class="hotel-image-placeholder">
+
+            <mat-icon>hotel</mat-icon>
+
+          </div>
+
+          <div class="hotel-stars">
+
+            <mat-icon
+              *ngFor="let star of [].constructor(hotel.numberOfStars)"
+            >
+              star
+            </mat-icon>
+
+          </div>
+
+        </div>
+
+
+        <!-- CONTENT -->
+        <mat-card-content>
+
+          <span class="hotel-label">
+            HOTEL
+          </span>
+
+          <h3>
+            {{ hotel.name }}
+          </h3>
+
+
+          <div class="destination-info">
+
+            <mat-icon>location_on</mat-icon>
+
+            <span>
+              {{ hotel.destination?.place || 'Nepoznata destinacija' }}
+            </span>
+
+          </div>
+
+
+          <p class="hotel-description">
+
+            {{ hotel.description }}
+
+          </p>
+
+
+          <div class="hotel-meta">
+
+            <span>
+              <mat-icon>verified</mat-icon>
+              {{ hotel.numberOfStars }} zvezdica
+            </span>
+
+          </div>
+
+        </mat-card-content>
+
+
+        <!-- ACTIONS -->
+        <div class="card-actions">
+
+          <button
+            mat-stroked-button
+            class="edit-button"
+            (click)="$event.stopPropagation(); openDialog(
+              2,
+              hotel.id,
+              hotel.name,
+              hotel.numberOfStars,
+              hotel.description,
+              hotel.destination
+            )"
+          >
+
+            <mat-icon>edit</mat-icon>
+
+            Izmeni
+
+          </button>
+
+
+          <button
+            mat-icon-button
+            class="delete-button"
+            matTooltip="Obriši hotel"
+            (click)="$event.stopPropagation(); openDialog(
+              3,
+              hotel.id,
+              hotel.name,
+              hotel.numberOfStars,
+              hotel.description,
+              hotel.destination
+            )"
+          >
+
+            <mat-icon>delete_outline</mat-icon>
+
+          </button>
+
+        </div>
+
+      </mat-card>
+
+    </div>
+
+
+    <!-- EMPTY -->
+    <div
+      class="empty-state"
+      *ngIf="dataSource && dataSource.data.length === 0"
+    >
+
+      <div class="empty-icon">
+
+        <mat-icon>hotel</mat-icon>
+
+      </div>
+
+      <h3>Nema dodatih hotela</h3>
+
+      <p>
+        Trenutno nema hotela u sistemu.
+        Dodajte prvi hotel da biste započeli.
+      </p>
+
+      <button
+        mat-raised-button
+        class="add-button"
+        (click)="openDialog(1)"
+      >
+
+        <mat-icon>add</mat-icon>
+
+        Dodaj hotel
+
+      </button>
+
+    </div>
+
+
+    <!-- PAGINATION -->
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Izaberite stranicu"
+    >
+    </mat-paginator>
+
+  </section>
+
 </div>

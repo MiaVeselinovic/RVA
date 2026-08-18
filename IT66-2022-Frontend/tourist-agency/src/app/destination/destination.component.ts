@@ -11,7 +11,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-destination',
-  imports: [MatTableModule, MatIconModule, MatToolbarModule, MatDialogModule, MatSortModule, MatPaginatorModule],
   templateUrl: './destination.component.html',
   styleUrls: ['./destination.component.css']
 })

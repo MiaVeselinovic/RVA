@@ -13,7 +13,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-hotel',
-  imports: [MatTableModule, MatIconModule, MatToolbarModule, MatDialogModule, MatSortModule, MatPaginatorModule],
   templateUrl: './hotel.component.html',
   styleUrls: ['./hotel.component.css']
 })

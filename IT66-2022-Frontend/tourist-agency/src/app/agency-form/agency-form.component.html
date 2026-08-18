@@ -1,32 +1,136 @@
-<div class="container">
-    <h3 mat-dialog-title *ngIf="flag == 1">Add agency</h3>
-    <h3 mat-dialog-title *ngIf="flag == 2">Update agency: {{data.name}}</h3>
-    <h3 mat-dialog-title *ngIf="flag == 3">Delete agency: {{data.name}}</h3>
+<div class="dialog-container">
 
-    <form class="mat-dialog-content" #formControl="ngForm">
-       <div class="form">
-        <mat-form-field>
-            <input matInput placeholder="Name" name="Name" [disabled]="flag==3" [(ngModel)]="data.name" required />
-        </mat-form-field>
-       </div>
+  <div class="dialog-header">
 
-       <div class="form">
-        <mat-form-field>
-            <input matInput placeholder="Address" name="Address" [disabled]="flag==3" [(ngModel)]="data.address" required />
-        </mat-form-field>
-       </div>
-
-       <div class="form">
-        <mat-form-field>
-            <input matInput placeholder="Contact" name="Contact" [disabled]="flag==3" [(ngModel)]="data.contact" required />
-        </mat-form-field>
-       </div>
-    </form>
-
-    <div class="mat-dialog-actions">
-        <button matButton *ngIf="flag == 1" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="add()">Save</button>
-        <button matButton *ngIf="flag == 2" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="update()">Update</button>
-        <button matButton *ngIf="flag == 3" mat-dialog-close="1" (click)="delete()">Delete</button>
-        <button matButton (click)="cancel()">Cancel</button>
+    <div class="dialog-icon">
+      <mat-icon>
+        {{ flag == 3 ? 'delete_outline' : 'apartment' }}
+      </mat-icon>
     </div>
+
+    <div>
+      <span class="dialog-label">ART OF TRAVEL</span>
+
+      <h2>
+        <span *ngIf="flag == 1">Nova agencija</span>
+        <span *ngIf="flag == 2">Izmena agencije</span>
+        <span *ngIf="flag == 3">Brisanje agencije</span>
+      </h2>
+
+      <p *ngIf="flag == 2">
+        {{ data.name }}
+      </p>
+
+      <p *ngIf="flag == 3">
+        Da li ste sigurni da želite da obrišete ovu agenciju?
+      </p>
+    </div>
+
+  </div>
+
+
+  <form
+    class="dialog-form"
+    #formControl="ngForm"
+  >
+
+    <mat-form-field appearance="outline">
+      <mat-label>Naziv agencije</mat-label>
+
+      <mat-icon matPrefix>business</mat-icon>
+
+      <input
+        matInput
+        name="Name"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.name"
+        required
+      />
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Adresa</mat-label>
+
+      <mat-icon matPrefix>location_on</mat-icon>
+
+      <input
+        matInput
+        name="Address"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.address"
+        required
+      />
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Kontakt</mat-label>
+
+      <mat-icon matPrefix>phone</mat-icon>
+
+      <input
+        matInput
+        name="Contact"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.contact"
+        required
+      />
+    </mat-form-field>
+
+  </form>
+
+
+  <div class="dialog-actions">
+
+    <button
+      mat-button
+      class="cancel-button"
+      (click)="cancel()"
+    >
+      Otkaži
+    </button>
+
+
+    <button
+      mat-raised-button
+      class="save-button"
+      *ngIf="flag == 1"
+      type="submit"
+      mat-dialog-close="1"
+      [disabled]="!formControl.valid"
+      (click)="add()"
+    >
+      <mat-icon>save</mat-icon>
+      Sačuvaj
+    </button>
+
+
+    <button
+      mat-raised-button
+      class="save-button"
+      *ngIf="flag == 2"
+      type="submit"
+      mat-dialog-close="1"
+      [disabled]="!formControl.valid"
+      (click)="update()"
+    >
+      <mat-icon>check</mat-icon>
+      Sačuvaj izmene
+    </button>
+
+
+    <button
+      mat-raised-button
+      class="delete-confirm-button"
+      *ngIf="flag == 3"
+      mat-dialog-close="1"
+      (click)="delete()"
+    >
+      <mat-icon>delete_outline</mat-icon>
+      Obrisi
+    </button>
+
+  </div>
+
 </div>

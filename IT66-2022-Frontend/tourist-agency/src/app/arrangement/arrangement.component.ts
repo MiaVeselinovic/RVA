@@ -13,10 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 
-
 @Component({
   selector: 'app-arrangement',
-  imports: [MatTableModule, MatIconModule, MatToolbarModule, MatDialogModule, DatePipe, MatSortModule, MatPaginatorModule],
   templateUrl: './arrangement.component.html',
   styleUrls: ['./arrangement.component.css']
 })

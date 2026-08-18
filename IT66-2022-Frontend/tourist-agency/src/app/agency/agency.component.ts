@@ -13,7 +13,6 @@ import { ArrangementComponent } from '../arrangement/arrangement.component';
 
 @Component({
   selector: 'app-agency',
-  imports: [MatTableModule, MatIconModule, MatToolbarModule, ArrangementComponent, CommonModule, MatSortModule, MatPaginatorModule],
   templateUrl: './agency.component.html',
   styleUrls: ['./agency.component.css']
 })

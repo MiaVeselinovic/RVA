@@ -12,13 +12,13 @@
 
     <div class="form">
       <mat-form-field>
-        <input matInput type="number" min="1" max="5" placeholder="Number of stars" name="numberOfStars" [disabled]="flag == 3" [(ngModel)]="data.numberOfStars required />
+        <input matInput type="number" min="1" max="5" placeholder="Number of stars" name="numberOfStars" [disabled]="flag == 3" [(ngModel)]="data.numberOfStars" required />
       </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field>
-        <input matInput placeholder="Description name="description" [disabled]="flag == 3" [(ngModel)]="data.description required />
+        <input matInput placeholder="Description" name="description" [disabled]="flag == 3" [(ngModel)]="data.description" required />
       </mat-form-field>
     </div>
 

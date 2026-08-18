@@ -1,55 +1,193 @@
-<mat-toolbar color="primary">
-  <span class="title-center">Destinations</span>
-</mat-toolbar>
+<div class="destination-page">
 
-<div class="container mat-elavation-z8">
-  <table mat-table matSort [dataSource]="dataSource" class="mat-cell">
-    <!-- ID -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-    </ng-container>
+  <!-- HEADER -->
+  <section class="page-header">
 
-    <!-- Mesto -->
-    <ng-container matColumnDef="place">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Place</th>
-      <td mat-cell *matCellDef="let row">{{ row.place }}</td>
-    </ng-container>
+    <div class="header-content">
 
-    <!-- Država -->
-    <ng-container matColumnDef="country">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Country</th>
-      <td mat-cell *matCellDef="let row">{{ row.country }}</td>
-    </ng-container>
+      <div>
+        <span class="section-label">ART OF TRAVEL</span>
 
-    <!-- Opis -->
-    <ng-container matColumnDef="opis">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Description</th>
-      <td mat-cell *matCellDef="let row">{{ row.description }}</td>
-    </ng-container>
+        <h1>Destinacije</h1>
 
-    <!-- Action Buttons -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button (click)="openDialog(1)">
-          <mat-icon color="accent">add</mat-icon>
-        </button>
-      </th>
-      <td mat-cell *matCellDef="let row; let i = index">
-        <button mat-icon-button (click)="openDialog(2, row.id, row.place, row.country, row.description)">
-          <mat-icon color="primary" aria-label="Edit">edit</mat-icon>
-        </button>
-        <button mat-icon-button (click)="openDialog(3, row.id, row.place, row.country, row.description)">
-          <mat-icon color="warn" aria-label="Delete">delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+        <p>
+          Otkrijte zanimljiva mesta i države, istražite njihove opise
+          i pronađite svoju sledeću destinaciju.
+        </p>
+      </div>
 
-    <!-- Rows -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <button
+        mat-raised-button
+        class="add-button"
+        (click)="openDialog(1)"
+      >
+        <mat-icon>add_location_alt</mat-icon>
+        Dodaj destinaciju
+      </button>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page"></mat-paginator>
+    </div>
+
+  </section>
+
+
+  <!-- DESTINATIONS -->
+  <section class="destination-section">
+
+    <div class="section-top">
+
+      <div>
+        <span class="list-label">ISTRAŽITE SVET</span>
+        <h2>Popularne destinacije</h2>
+      </div>
+
+      <div class="destination-count" *ngIf="dataSource">
+
+        <mat-icon>public</mat-icon>
+
+        <span>
+          {{ dataSource.data.length }} destinacija
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- GRID -->
+    <div
+      class="destination-grid"
+      *ngIf="dataSource"
+    >
+
+      <mat-card
+        class="destination-card"
+        *ngFor="let destination of dataSource.data"
+      >
+
+        <!-- CARD VISUAL -->
+        <div class="destination-visual">
+
+          <div class="destination-visual-icon">
+            <mat-icon>explore</mat-icon>
+          </div>
+
+          <span class="destination-id">
+            #{{ destination.id }}
+          </span>
+
+          <div class="destination-country">
+            <mat-icon>public</mat-icon>
+            {{ destination.country }}
+          </div>
+
+        </div>
+
+
+        <!-- CONTENT -->
+        <mat-card-content>
+
+          <span class="destination-label">
+            DESTINACIJA
+          </span>
+
+          <h3>
+            {{ destination.place }}
+          </h3>
+
+          <div class="location-row">
+
+            <mat-icon>location_on</mat-icon>
+
+            <span>
+              {{ destination.country }}
+            </span>
+
+          </div>
+
+          <p>
+            {{ destination.description }}
+          </p>
+
+        </mat-card-content>
+
+
+        <!-- ACTIONS -->
+        <div class="card-actions">
+
+          <button
+            mat-stroked-button
+            class="edit-button"
+            (click)="$event.stopPropagation(); openDialog(
+              2,
+              destination.id,
+              destination.place,
+              destination.country,
+              destination.description
+            )"
+          >
+            <mat-icon>edit</mat-icon>
+            Izmeni
+          </button>
+
+          <button
+            mat-icon-button
+            class="delete-button"
+            matTooltip="Obriši destinaciju"
+            (click)="$event.stopPropagation(); openDialog(
+              3,
+              destination.id,
+              destination.place,
+              destination.country,
+              destination.description
+            )"
+          >
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+
+        </div>
+
+      </mat-card>
+
+    </div>
+
+
+    <!-- EMPTY STATE -->
+    <div
+      class="empty-state"
+      *ngIf="dataSource && dataSource.data.length === 0"
+    >
+
+      <div class="empty-icon">
+        <mat-icon>travel_explore</mat-icon>
+      </div>
+
+      <h3>Nema destinacija</h3>
+
+      <p>
+        Trenutno nema dodatih destinacija.
+        Dodajte prvu destinaciju da biste započeli.
+      </p>
+
+      <button
+        mat-raised-button
+        class="add-button"
+        (click)="openDialog(1)"
+      >
+        <mat-icon>add_location_alt</mat-icon>
+        Dodaj destinaciju
+      </button>
+
+    </div>
+
+
+    <!-- PAGINATION -->
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Izaberite stranicu"
+    >
+    </mat-paginator>
+
+  </section>
+
 </div>
-

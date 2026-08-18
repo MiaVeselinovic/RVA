@@ -1,0 +1,158 @@
+.dialog-container {
+  width: 100%;
+  min-width: 500px;
+  max-width: 500px;
+
+  padding: 30px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-bottom: 28px;
+}
+
+.dialog-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 54px;
+  height: 54px;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  background: #edf8f7;
+  color: #1c9895;
+}
+
+.dialog-icon mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.dialog-label {
+  color: #1c9895;
+
+  font-size: 0.68rem;
+  letter-spacing: 1.6px;
+  font-weight: 700;
+}
+
+.dialog-header h2 {
+  margin: 4px 0 2px;
+
+  color: #163e5a;
+
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.dialog-header p {
+  margin: 0;
+
+  color: #80909d;
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.dialog-form mat-form-field {
+  width: 100%;
+}
+
+.dialog-form mat-icon {
+  color: #1c9895;
+  margin-right: 7px;
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 25px;
+  padding-top: 20px;
+
+  border-top: 1px solid #edf1f4;
+}
+
+.cancel-button {
+  color: #667988;
+}
+
+.save-button {
+  min-width: 125px;
+
+  background: #123f5d;
+  color: white;
+
+  border-radius: 6px;
+}
+
+.save-button mat-icon {
+  margin-right: 6px;
+}
+
+.delete-confirm-button {
+  min-width: 110px;
+
+  background: #c45c57;
+  color: white;
+
+  border-radius: 6px;
+}
+
+.delete-confirm-button mat-icon {
+  margin-right: 6px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 500px) {
+
+  .dialog-container {
+    min-width: auto;
+    padding: 24px;
+  }
+
+  .dialog-actions {
+    flex-wrap: wrap;
+  }
+
+  .save-button,
+  .delete-confirm-button {
+    flex: 1;
+  }
+
+}

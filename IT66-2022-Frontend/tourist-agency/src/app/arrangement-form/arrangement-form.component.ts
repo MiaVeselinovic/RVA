@@ -18,17 +18,6 @@ import { HotelService } from '../services/hotel-service';
 
 @Component({
   selector: 'app-arrangement-form',
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    FormsModule,
-  ],
   templateUrl: './arrangement-form.component.html',
   styleUrls: ['./arrangement-form.component.css']
 })

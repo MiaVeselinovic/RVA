@@ -1,61 +1,183 @@
-<mat-toolbar color="primary">
-  <span class="title-center">Agencies</span>
-</mat-toolbar>
+<div class="agency-page">
 
-<div class="container mat-elavation-z8">
-  <table mat-table matSort [dataSource]="dataSource" class="mat-cell">
-    <!-- ID -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-    </ng-container>
+  <!-- HEADER -->
+  <section class="page-header">
 
-    <!-- Naziv -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let row">{{ row.name }}</td>
-    </ng-container>
+    <div class="header-content">
+      <div>
+        <span class="section-label">ART OF TRAVEL</span>
 
-    <!-- Adresa -->
-    <ng-container matColumnDef="address">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Address</th>
-      <td mat-cell *matCellDef="let row">{{ row.address }}</td>
-    </ng-container>
+        <h1>Turističke agencije</h1>
 
-    <!--Kontakt -->
-    <ng-container matColumnDef="contact">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Contact</th>
-      <td mat-cell *matCellDef="let row">{{ row.contact}}</td>
-    </ng-container>
+        <p>
+          Pregledajte i upravljajte turističkim agencijama,
+          njihovim adresama i kontakt informacijama.
+        </p>
+      </div>
 
-    <!-- Action Buttons -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button (click)="openDialog(1)">
-          <mat-icon color="accent">add</mat-icon>
-        </button>
-      </th>
-      <td mat-cell *matCellDef="let row; let i = index">
-        <button mat-icon-button (click)="openDialog(2, row.id, row.name, row.address, row.contact)">
-          <mat-icon color="primary" aria-label="Edit">edit</mat-icon>
-        </button>
-        <button mat-icon-button (click)="openDialog(3, row.id, row.name, row.address, row.contact)">
-          <mat-icon color="warn" aria-label="Delete">delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <button
+        mat-raised-button
+        class="add-agency-button"
+        (click)="openDialog(1)"
+      >
+        <mat-icon>add</mat-icon>
+        Dodaj agenciju
+      </button>
+    </div>
 
-    <!-- Rows -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor:pointer" (click)="selectRow(row)"></tr>
-  
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page"></mat-paginator>
-</div>
+  </section>
 
-<div>
-  <app-arrangement-component>
+
+  <!-- AGENCY LIST -->
+  <section class="agency-section">
+
+    <div class="section-top">
+
+      <div>
+        <span class="list-label">AGENCIJE</span>
+        <h2>Sve turističke agencije</h2>
+      </div>
+
+      <div class="agency-count" *ngIf="dataSource">
+        <mat-icon>apartment</mat-icon>
+        <span>{{ dataSource.data.length }} agencija</span>
+      </div>
+
+    </div>
+
+
+    <!-- CARDS -->
+    <div class="agency-grid" *ngIf="dataSource">
+
+      <mat-card
+        class="agency-card"
+        *ngFor="let agency of dataSource.data"
+        (click)="selectRow(agency)"
+      >
+
+        <div class="agency-card-top">
+
+          <div class="agency-icon">
+            <mat-icon>apartment</mat-icon>
+          </div>
+
+          <span class="agency-id">
+            ID #{{ agency.id }}
+          </span>
+
+        </div>
+
+
+        <mat-card-content>
+
+          <h3>{{ agency.name }}</h3>
+
+          <div class="agency-info">
+
+            <div class="info-row">
+              <mat-icon>location_on</mat-icon>
+              <span>{{ agency.address }}</span>
+            </div>
+
+            <div class="info-row">
+              <mat-icon>phone</mat-icon>
+              <span>{{ agency.contact }}</span>
+            </div>
+
+          </div>
+
+        </mat-card-content>
+
+
+        <div class="card-actions">
+
+          <button
+            mat-stroked-button
+            class="edit-button"
+            (click)="$event.stopPropagation(); openDialog(
+              2,
+              agency.id,
+              agency.name,
+              agency.address,
+              agency.contact
+            )"
+          >
+            <mat-icon>edit</mat-icon>
+            Izmeni
+          </button>
+
+          <button
+            mat-icon-button
+            class="delete-button"
+            matTooltip="Obriši agenciju"
+            (click)="$event.stopPropagation(); openDialog(
+              3,
+              agency.id,
+              agency.name,
+              agency.address,
+              agency.contact
+            )"
+          >
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+
+        </div>
+
+      </mat-card>
+
+    </div>
+
+
+    <!-- EMPTY STATE -->
+    <div
+      class="empty-state"
+      *ngIf="dataSource && dataSource.data.length === 0"
+    >
+
+      <div class="empty-icon">
+        <mat-icon>travel_explore</mat-icon>
+      </div>
+
+      <h3>Nema dodatih agencija</h3>
+
+      <p>
+        Trenutno nema nijedne turističke agencije.
+        Dodajte prvu agenciju da biste započeli.
+      </p>
+
+      <button
+        mat-raised-button
+        class="add-agency-button"
+        (click)="openDialog(1)"
+      >
+        <mat-icon>add</mat-icon>
+        Dodaj agenciju
+      </button>
+
+    </div>
+
+
+    <!-- PAGINATION -->
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Izaberite stranicu"
+    >
+    </mat-paginator>
+
+  </section>
+
+
+  <!-- SELECTED AGENCY / ARRANGEMENTS -->
+  <section
+    class="selected-agency-section"
     *ngIf="parentSelectedArrangement"
-    [childSelectedAgency]="parentSelectedArrangement">
-  </app-arrangement-component>
+  >
+
+    <app-arrangement
+      [childSelectedAgency]="parentSelectedArrangement">
+    </app-arrangement>
+
+  </section>
+
 </div>

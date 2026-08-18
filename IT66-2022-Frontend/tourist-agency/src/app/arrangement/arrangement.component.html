@@ -1,60 +1,231 @@
-<mat-toolbar color="primary">
-  <span class="title-center">Arrangements</span>
-</mat-toolbar>
+<div class="arrangement-page">
 
-<div class="container mat-elavation-z8">
-  <table mat-table matSort [dataSource]="dataSource" class="mat-cell">
-    <!-- ID -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-    </ng-container>
+  <!-- HEADER -->
+  <section class="page-header">
 
-    <!-- Ukupna cena -->
-    <ng-container matColumnDef="total_cost">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Total cost</th>
-      <td mat-cell *matCellDef="let row">{{ row.total_cost }}</td>
-    </ng-container>
+    <div class="header-content">
 
-    <!-- Plaćeno -->
-    <ng-container matColumnDef="payed">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Payed</th>
-      <td mat-cell *matCellDef="let row">{{ row.payed ? 'Da' : 'Ne' }}</td>
-    </ng-container>
+      <div>
+        <span class="section-label">ART OF TRAVEL</span>
 
-    <!-- Datum realizacije -->
-    <ng-container matColumnDef="realization_date">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Date of realization</th>
-      <td mat-cell *matCellDef="let row">{{ row.realization_date | date:'dd.MM.yyyy' }}</td>
-    </ng-container>
+        <h1>Turistički aranžmani</h1>
 
-    <!-- Hotel -->
-    <ng-container matColumnDef="hotel">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Hotel</th>
-      <td mat-cell *matCellDef="let row">{{ row.hotel?.name }}</td>
-    </ng-container>
+        <p>
+          Pregledajte dostupne aranžmane, njihove cene,
+          datume realizacije i informacije o hotelima.
+        </p>
+      </div>
 
-    <!-- Action Buttons -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button (click)="openDialog(1)">
-          <mat-icon color="accent">add</mat-icon>
-        </button>
-      </th>
-      <td mat-cell *matCellDef="let row; let i = index">
-        <button mat-icon-button (click)="openDialog(2, row.id, row.ukupna_cena, row.placeno, row.datum_realizacije, row.hotel)">
-          <mat-icon color="primary" aria-label="Edit">edit</mat-icon>
-        </button>
-        <button mat-icon-button (click)="openDialog(3, row.id, row.ukupna_cena, row.placeno, row.datum_realizacije, row.hotel)">
-          <mat-icon color="warn" aria-label="Delete">delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <button
+        mat-raised-button
+        class="add-button"
+        (click)="openDialog(1)"
+      >
+        <mat-icon>add</mat-icon>
+        Dodaj aranžman
+      </button>
 
-    <!-- Rows -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+    </div>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page"></mat-paginator>
+  </section>
+
+
+  <!-- CONTENT -->
+  <section class="arrangement-section">
+
+    <div class="section-top">
+
+      <div>
+        <span class="list-label">PUTOVANJA</span>
+        <h2>Dostupni aranžmani</h2>
+      </div>
+
+      <div class="arrangement-count" *ngIf="dataSource">
+        <mat-icon>luggage</mat-icon>
+        <span>{{ dataSource.data.length }} aranžmana</span>
+      </div>
+
+    </div>
+
+
+    <!-- CARDS -->
+    <div class="arrangement-grid" *ngIf="dataSource">
+
+      <mat-card
+        class="arrangement-card"
+        *ngFor="let arrangement of dataSource.data"
+      >
+
+        <!-- TOP -->
+        <div class="card-top">
+
+          <div class="travel-icon">
+            <mat-icon>luggage</mat-icon>
+          </div>
+
+          <span class="arrangement-id">
+            ARANŽMAN #{{ arrangement.id }}
+          </span>
+
+        </div>
+
+
+        <!-- PRICE -->
+        <div class="price-section">
+
+          <span class="price-label">UKUPNA CENA</span>
+
+          <div class="price">
+            {{ arrangement.total_cost }}
+            <span>€</span>
+          </div>
+
+        </div>
+
+
+        <!-- DETAILS -->
+        <mat-card-content>
+
+          <div class="detail-item">
+
+            <div class="detail-icon">
+              <mat-icon>event</mat-icon>
+            </div>
+
+            <div>
+              <span>Datum realizacije</span>
+              <strong>
+                {{ arrangement.realization_date | date:'dd.MM.yyyy' }}
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <div class="detail-icon">
+              <mat-icon>hotel</mat-icon>
+            </div>
+
+            <div>
+              <span>Hotel</span>
+              <strong>
+                {{ arrangement.hotel?.name || 'Nije definisan' }}
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <div class="detail-icon">
+              <mat-icon>payments</mat-icon>
+            </div>
+
+            <div>
+              <span>Status plaćanja</span>
+
+              <strong
+                class="payment-status"
+                [class.paid]="arrangement.payed"
+                [class.unpaid]="!arrangement.payed"
+              >
+                <mat-icon>
+                  {{ arrangement.payed ? 'check_circle' : 'pending' }}
+                </mat-icon>
+
+                {{ arrangement.payed ? 'Plaćeno' : 'Nije plaćeno' }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </mat-card-content>
+
+
+        <!-- ACTIONS -->
+        <div class="card-actions">
+
+          <button
+            mat-stroked-button
+            class="edit-button"
+            (click)="$event.stopPropagation(); openDialog(
+              2,
+              arrangement.id,
+              arrangement.total_cost,
+              arrangement.payed,
+              arrangement.realization_date,
+              arrangement.hotel
+            )"
+          >
+            <mat-icon>edit</mat-icon>
+            Izmeni
+          </button>
+
+
+          <button
+            mat-icon-button
+            class="delete-button"
+            matTooltip="Obriši aranžman"
+            (click)="$event.stopPropagation(); openDialog(
+              3,
+              arrangement.id,
+              arrangement.total_cost,
+              arrangement.payed,
+              arrangement.realization_date,
+              arrangement.hotel
+            )"
+          >
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+
+        </div>
+
+      </mat-card>
+
+    </div>
+
+
+    <!-- EMPTY -->
+    <div
+      class="empty-state"
+      *ngIf="dataSource && dataSource.data.length === 0"
+    >
+
+      <div class="empty-icon">
+        <mat-icon>flight_takeoff</mat-icon>
+      </div>
+
+      <h3>Nema aranžmana</h3>
+
+      <p>
+        Trenutno nema dodatih turističkih aranžmana.
+        Dodajte prvi aranžman da biste započeli.
+      </p>
+
+      <button
+        mat-raised-button
+        class="add-button"
+        (click)="openDialog(1)"
+      >
+        <mat-icon>add</mat-icon>
+        Dodaj aranžman
+      </button>
+
+    </div>
+
+
+    <!-- PAGINATION -->
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Izaberite stranicu"
+    >
+    </mat-paginator>
+
+  </section>
+
 </div>

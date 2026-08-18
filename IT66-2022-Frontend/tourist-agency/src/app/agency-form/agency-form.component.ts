@@ -6,7 +6,6 @@ import { Agency } from '../model/Agency';
 
 @Component({
   selector: 'app-agency-form',
-  imports: [MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule,FormsModule, CommonModule],
   templateUrl: './agency-form.component.html',
   styleUrls: ['./agency-form.component.css']
 })
@@ -64,6 +63,11 @@ export class AgencyFormComponent {
         }
       }
     )
+  }
+
+  public cancel():void{
+    this.dialogRef.close();
+    this.snackBar.open('You rejected changes', 'Ok', {duration:2500});
   }
 
 }

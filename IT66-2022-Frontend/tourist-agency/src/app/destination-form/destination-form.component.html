@@ -1,33 +1,146 @@
+<div class="dialog-container">
 
-<div class="container">
-    <h3 mat-dialog-title *ngIf="flag == 1">Add destination</h3>
-    <h3 mat-dialog-title *ngIf="flag == 2">Update destination: {{data.place}}</h3>
-    <h3 mat-dialog-title *ngIf="flag == 3">Delete destination: {{data.place}}</h3>
+  <div class="dialog-header">
 
-    <form class="mat-dialog-content" #formControl="ngForm">
-       <div class="form">
-        <mat-form-field>
-            <input matInput placeholder="Place" name="Place" [disabled]="flag==3" [(ngModel)]="data.place" required />
-        </mat-form-field>
-       </div>
-
-       <div class="form">
-        <mat-form-field>
-            <input matInput placeholder="Country" name="Country" [disabled]="flag==3" [(ngModel)]="data.country" required />
-        </mat-form-field>
-       </div>
-
-       <div class="form">
-        <mat-form-field>
-            <input matInput placeholder="Description" name="Description" [disabled]="flag==3" [(ngModel)]="data.description" required />
-        </mat-form-field>
-       </div>
-    </form>
-
-    <div class="mat-dialog-actions">
-        <button matButton *ngIf="flag == 1" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="add()">Save</button>
-        <button matButton *ngIf="flag == 2" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="update()">Change</button>
-        <button matButton *ngIf="flag == 3" mat-dialog-close="1" (click)="delete()">Delete</button>
-        <button matButton (click)="cancel()">Cancel</button>
+    <div class="dialog-icon">
+      <mat-icon>
+        {{ flag == 3 ? 'delete_outline' : 'explore' }}
+      </mat-icon>
     </div>
+
+    <div>
+      <span class="dialog-label">ART OF TRAVEL</span>
+
+      <h2>
+        <span *ngIf="flag == 1">Nova destinacija</span>
+        <span *ngIf="flag == 2">Izmena destinacije</span>
+        <span *ngIf="flag == 3">Brisanje destinacije</span>
+      </h2>
+
+      <p *ngIf="flag == 2">
+        {{ data.place }}
+      </p>
+
+      <p *ngIf="flag == 3">
+        Da li ste sigurni da želite da obrišete ovu destinaciju?
+      </p>
+    </div>
+
+  </div>
+
+
+  <form
+    class="dialog-form"
+    #formControl="ngForm"
+  >
+
+    <!-- PLACE -->
+    <mat-form-field appearance="outline">
+
+      <mat-label>Mesto</mat-label>
+
+      <mat-icon matPrefix>location_on</mat-icon>
+
+      <input
+        matInput
+        name="Place"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.place"
+        required
+      />
+
+    </mat-form-field>
+
+
+    <!-- COUNTRY -->
+    <mat-form-field appearance="outline">
+
+      <mat-label>Država</mat-label>
+
+      <mat-icon matPrefix>public</mat-icon>
+
+      <input
+        matInput
+        name="Country"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.country"
+        required
+      />
+
+    </mat-form-field>
+
+
+    <!-- DESCRIPTION -->
+    <mat-form-field appearance="outline">
+
+      <mat-label>Opis destinacije</mat-label>
+
+      <mat-icon matPrefix>description</mat-icon>
+
+      <textarea
+        matInput
+        rows="4"
+        name="Description"
+        [disabled]="flag == 3"
+        [(ngModel)]="data.description"
+        required
+      ></textarea>
+
+    </mat-form-field>
+
+  </form>
+
+
+  <div class="dialog-actions">
+
+    <button
+      mat-button
+      class="cancel-button"
+      (click)="cancel()"
+    >
+      Otkaži
+    </button>
+
+
+    <button
+      mat-raised-button
+      class="save-button"
+      *ngIf="flag == 1"
+      type="submit"
+      mat-dialog-close="1"
+      [disabled]="!formControl.valid"
+      (click)="add()"
+    >
+      <mat-icon>save</mat-icon>
+      Sačuvaj
+    </button>
+
+
+    <button
+      mat-raised-button
+      class="save-button"
+      *ngIf="flag == 2"
+      type="submit"
+      mat-dialog-close="1"
+      [disabled]="!formControl.valid"
+      (click)="update()"
+    >
+      <mat-icon>check</mat-icon>
+      Sačuvaj izmene
+    </button>
+
+
+    <button
+      mat-raised-button
+      class="delete-confirm-button"
+      *ngIf="flag == 3"
+      mat-dialog-close="1"
+      (click)="delete()"
+    >
+      <mat-icon>delete_outline</mat-icon>
+      Obrisi
+    </button>
+
+  </div>
+
 </div>

@@ -75,7 +75,7 @@ export class HotelFormComponent {
     this.snackBar.open('You rejected changes', 'OK', { duration: 2500 });
   }
 
-  public compareDestinacija(a: Destination, b: Destination) {
+  public compareDestination(a: Destination, b: Destination) {
     return a && b ? a.id === b.id : a === b;
   }
 
